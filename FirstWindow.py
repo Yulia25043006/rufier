@@ -28,10 +28,10 @@ class FirstWindow(QWidget):
         self.second_window = SecondWindow()
         self.hide()
     def connect(self):
-        self.button.clicked.connect(next)
+        self.button.clicked.connect(self.next)
     def set_appear(self):
         self.setWindowTitle('здоровье')
-        self.resize(500, 500)
+        self.resize(300, 300)
 app = QApplication([])
 first_window = FirstWindow()
 app.exec()

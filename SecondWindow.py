@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QApplication
+from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QApplication, QLineEdit, QHBoxLayout
 from ThirdWindow import *
 
 class SecondWindow(QWidget):
@@ -9,20 +9,46 @@ class SecondWindow(QWidget):
         self.set_appear()
         self.show()
     def initUI(self):
-        self.label1 = QLabel('Лягте на спину и замерьте пульс на 15 секунд. Нажмите кнопку "Начать первый тест", чтобы запустить '
+        self.label1 = QLabel('Введите ФИО')
+        self.label2 = QLabel('возраст')
+        self.label3 = QLabel('Лягте на спину и замерьте пульс на 15 секунд. Нажмите кнопку "Начать первый тест", чтобы запустить '
                              'таймер.Результат запишите в соответствующее полe')
-        self.label2 = QLabel('Выполните 30 приседаний за 45 секунд. Для этого нажмите кнопку "Начать делать приседания", чтобы запустить счетчик приседаний')
-        self.button = QPushButton('Начать первый тест')
+        self.label4 = QLabel('Выполните 30 приседаний за 45 секунд. Для этого нажмите кнопку "Начать делать приседания", чтобы запустить счетчик приседаний')
+        self.label5 = QLabel('Лягте на спину и замерьте пульс сначала за первые 15 секунд минуты, затем за последние 15 секунд.\nНажмите кнопку "Начать финальный тест", чтобы запустить таймер.\nЗелёным обозначены секунды, в течение которых необходимо \nпроводить измерения, черным - секунды без замера пульсаций. Результаты запишите в соответствующие поля.')
+        self.edit1 = QLineEdit('ФИО')
+        self.edit2 = QLineEdit('0')
+        self.edit3 = QLineEdit('0')
+        self.edit4 = QLineEdit('0')
+        self.edit5 = QLineEdit('0')
+        self.button1 = QPushButton('Начать первый тест')
+        self.button2 = QPushButton('Начать второй тест')
+        self.button3 = QPushButton('Начать делать третий тест')
+        self.button4 = QPushButton('Отправить результаты')
+        self.timer = QLabel('00:00:00')
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label1)
+        self.layout.addWidget(self.edit1)
         self.layout.addWidget(self.label2)
-        self.layout.addWidget(self.button)
+        self.layout.addWidget(self.edit2)
+        self.layout.addWidget(self.label3)
+        self.layout.addWidget(self.button1)
+        self.layout.addWidget(self.edit3)
+        self.layout.addWidget(self.label4)
+        self.layout.addWidget(self.button2)
+        self.layout.addWidget(self.label5)
+        self.layout.addWidget(self.button3)
+        self.layout.addWidget(self.edit4)
+        self.layout.addWidget(self.edit5)
+        self.layout.addWidget(self.button4)
+        self.layoutk = QHBoxLayout()
+        self.layoutk.addLayout(self.layout)
+        self.layoutk.addWidget(self.timer)
         self.setLayout(self.layout)
     def next(self):
         self.third_window = ThirdWindow()
         self.hide()
     def connect(self):
-        self.button.clicked.connect(next)
+        self.button.clicked.connect(self.next)
     def set_appear(self):
          self.setWindowTitle('Начать делать приседания')
          self.resize(500, 500)
