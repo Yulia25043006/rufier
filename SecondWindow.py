@@ -1,5 +1,6 @@
+from PyQt6.QtCore import QTime, QTimer
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QApplication, QLineEdit, QHBoxLayout
-from ThirdWindow import *
+from ThirdWindow import ThirdWindow
 
 class SecondWindow(QWidget):
     def __init__(self):
@@ -24,7 +25,7 @@ class SecondWindow(QWidget):
         self.button2 = QPushButton('Начать второй тест')
         self.button3 = QPushButton('Начать делать третий тест')
         self.button4 = QPushButton('Отправить результаты')
-        self.timer = QLabel('00:00:00')
+        self.time_text = QLabel('00:00:00')
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label1)
         self.layout.addWidget(self.edit1)
@@ -42,13 +43,37 @@ class SecondWindow(QWidget):
         self.layout.addWidget(self.button4)
         self.layoutk = QHBoxLayout()
         self.layoutk.addLayout(self.layout)
-        self.layoutk.addWidget(self.timer)
-        self.setLayout(self.layout)
+        self.layoutk.addWidget(self.timer_text)
+        self.setLayout(self.layoutk)
+
+    def timer1(self):
+        global time
+        time = QTime(0, 0, 15)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timerEvent1)
+        self.timer.start(1000)
+
+    def timerEvent1(self):
+        global time
+        time = time.addSecs(-1)
+        self.time_text.setText(time.toString('hh:mm:ss'))
+        self.time_text.setStyleSheet('color: rgb(0, 0, 230)')
+        if time.toString('hh:mm:ss') == '00:00:00':
+            self.timer.stop()
     def next(self):
-        self.third_window = ThirdWindow()
+        self.exp = Experiment(self.edit1.text(), self.edit2.text(), self.edit3.text(), self.edit4.text())
+        self.third_window = ThirdWindow(self.exp)
         self.hide()
     def connect(self):
-        self.button.clicked.connect(self.next)
+        self.button1.clicked.connect(self.timer1)
+        self.button4.clicked.connect(self.next)
     def set_appear(self):
          self.setWindowTitle('Начать делать приседания')
          self.resize(500, 500)
+
+class Experiment():
+    def __init__(self, edit1, edit2, edit3, edit4):
+        self.edit1 = edit1
+        self.edit2 = edit2
+        self.edit3 = edit3
+        self.edit4 = edit4

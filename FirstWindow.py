@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QApplication
-from SecondWindow import *
+from SecondWindow import SecondWindow
 
 class FirstWindow(QWidget):
     def __init__(self):
@@ -24,6 +24,7 @@ class FirstWindow(QWidget):
         self.layout.addWidget(self.label2)
         self.layout.addWidget(self.button)
         self.setLayout(self.layout)
+
     def next(self):
         self.second_window = SecondWindow()
         self.hide()

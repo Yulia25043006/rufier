@@ -1,7 +1,12 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QApplication
+
+from SecondWindow import Experiment
+
+
 class ThirdWindow(QWidget):
-    def __init__(self):
+    def __init__(self, experiment):
         super().__init__()
+        self.experiment = experiment
         self.initUI()
         self.set_appear()
         self.show()
