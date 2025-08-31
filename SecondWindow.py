@@ -25,7 +25,7 @@ class SecondWindow(QWidget):
         self.button2 = QPushButton('Начать второй тест')
         self.button3 = QPushButton('Начать делать третий тест')
         self.button4 = QPushButton('Отправить результаты')
-        self.time_text = QLabel('00:00:00')
+        self.timer_text = QLabel('00:00:00')
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label1)
         self.layout.addWidget(self.edit1)
@@ -56,24 +56,56 @@ class SecondWindow(QWidget):
     def timerEvent1(self):
         global time
         time = time.addSecs(-1)
-        self.time_text.setText(time.toString('hh:mm:ss'))
-        self.time_text.setStyleSheet('color: rgb(0, 0, 230)')
+        self.timer_text.setText(time.toString('hh:mm:ss'))
+        self.timer_text.setStyleSheet('color: rgb(0, 0, 230)')
         if time.toString('hh:mm:ss') == '00:00:00':
             self.timer.stop()
     def next(self):
         self.exp = Experiment(self.edit1.text(), self.edit2.text(), self.edit3.text(), self.edit4.text())
         self.third_window = ThirdWindow(self.exp)
         self.hide()
+
+    def timer2(self):
+        global time
+        time = QTime(0, 0, 45)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timerEvent1)
+        self.timer.start(1000)
+
+    def timerEvent2(self):
+        global time
+        time = time.addSecs(-1)
+        self.timer_text.setText(time.toString('hh:mm:ss'))
+        self.timer_text.setStyleSheet('color: rgb(255, 0, 0)')
+        if time.toString('hh:mm:ss') == '00:00:00':
+            self.timer.stop()
     def connect(self):
-        self.button1.clicked.connect(self.timer1)
+        self.button2.clicked.connect(self.timer2)
         self.button4.clicked.connect(self.next)
+        self.button1.clicked.connect(self.timer1)
+        self.button3.clicked.connect(self.timer3)
     def set_appear(self):
          self.setWindowTitle('Начать делать приседания')
          self.resize(500, 500)
 
+    def timer3(self):
+        global time
+        time = QTime(0, 0, 15)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timerEvent1)
+        self.timer.start(1000)
+
+    def timerEvent3(self):
+        global time
+        time = time.addSecs(-1)
+        self.timer_text.setText(time.toString('hh:mm:ss'))
+        self.timer_text.setStyleSheet('color: rgb(80, 200, 120)')
+        if time.toString('hh:mm:ss') == '00:00:00':
+            self.timer.stop()
+
 class Experiment():
     def __init__(self, edit1, edit2, edit3, edit4):
-        self.edit1 = edit1
-        self.edit2 = edit2
-        self.edit3 = edit3
-        self.edit4 = edit4
+        self.age = edit1
+        self.t1 = edit2
+        self.t2 = edit3
+        self.t3 = edit4
